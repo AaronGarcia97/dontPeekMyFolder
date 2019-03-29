@@ -1,0 +1,4 @@
+#!/bin/bash
+
+var="REMAIN=60 INC=5 ; while ; do /bin/cmd -arg1 ; sleep \$INC ; REMAIN=\$((\$REMAIN - \$INC)) ; done"
+echo "* * * * * "$var
