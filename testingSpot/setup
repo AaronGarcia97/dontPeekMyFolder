@@ -1,0 +1,40 @@
+#!/bin/bash
+
+localPath=$(pwd)
+scriptName=picTaker
+
+###### BREW AND IMAGESNAP ######
+: '
+while [ ! -e /usr/local/bin/brew ]
+  do
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  done
+brew install imagesnap
+'
+###### APPLESCRIPT ######
+specialName="Folder Action Scripts"
+filePath="$(echo $HOME)/Library/TEST/Scripts"
+fileName=appleScript.scpt
+
+#echo "PATH: $filePath/"$specialName"/$fileName"
+
+#generate localUser paths
+mkdir -p $filePath/"$specialName"
+
+#generate appleScript
+echo "on opening folder theAttachedFolder" > $filePath/"$specialName"/$fileName
+echo "	do shell script \" echo 1 >> $pwd/.hi\"" >> $filePath/"$specialName"/$fileName
+echo "end opening folder" >> $filePath/"$specialName"/$fileName
+
+###### GENERATE FOLDERS and FILES ######
+mkdir -p .folder
+touch .hi
+touch .before
+echo 0 > .before
+
+###### CRON ######
+#var="REMAIN=60 INC=5 ; while ; do $localPath/$scriptName; sleep \$INC ; REMAIN=\$((\$REMAIN - \$INC)) ; done"
+#echo "* * * * * "$var
+
+#load it to cron file
+#(crontab -l ; echo "* * * * * "$var)| crontab -
