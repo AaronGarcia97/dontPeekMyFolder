@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#variables
+folder=.folder
+localPath=$(pwd)
+
+echo "Script started $(date)" >> $localPath/logs.txt
+
+#beginning, get entered times
+actual=$(wc -l .hi | awk '{print $1}')
+before=$(cat .before)
+difference=`expr $actual - $before`
+
+if [ $difference -gt 0 ]
+then
+  #Difference greater than 0, this means some1 accessed the folder
+  imagesnap -f $folder/$actual.jpg
+fi
+
+#end, save actual to before file
+echo $actual > $localPath/.before
